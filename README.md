@@ -4,6 +4,10 @@ This gem provides opinionated support for converting blank string values to nil.
 
 [![Build Status](https://travis-ci.com/ioquatix/activerecord-blanks.svg)](https://travis-ci.com/ioquatix/activerecord-blanks)
 
+## Motivation
+
+There are too many poor implementations of this feature.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -22,6 +26,8 @@ class MyModel < ActiveRecord::Base
 end
 ```
 
+Any database column which allows `null`, and receives a String value, will be trimmed. Then, if the value is `#blank?`, it will be replaced with nil. This is done before validations.
+
 ## Contributing
 
 1. Fork it
@@ -33,6 +39,7 @@ end
 ## See Also
 
 - [ActiveRecord::Rack](https://github.com/ioquatix/activerecord-rack)
+- [ActiveRecord::Migrations](https://github.com/ioquatix/activerecord-migrations)
 
 ## License
 
