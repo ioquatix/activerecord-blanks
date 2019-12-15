@@ -38,7 +38,14 @@ module ActiveRecord
 				
 				next unless value.is_a?(String)
 				
-				write_attribute(column.name, to) if value.blank?
+				# Strip leading and trailing whitespace:
+				value = value.strip
+				
+				if value.blank?
+					write_attribute(column.name, to)
+				else
+					write_attribute(column.name, value)
+				end
 			end
 		end
 		

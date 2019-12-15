@@ -42,12 +42,10 @@ RSpec.describe ActiveRecord::Blanks do
 		end
 	end
 	
+	let(:model) {model_class.new(name: "test")}
 	let(:email) {"foo@bar.com"}
 	
 	it "shouldn't convert non-blank strings to nil" do
-		model = model_class.new
-		
-		model.name = "test"
 		model.email = email
 		
 		model.save!
@@ -56,10 +54,26 @@ RSpec.describe ActiveRecord::Blanks do
 	end
 	
 	it "should convert blank strings to nil" do
+		model.email = ""
+		
+		model.save!
+		
+		expect(model.email).to be_nil
+	end
+	
+	it "should trim whitespace" do
+		model.email = " #{email} "
+		
+		model.save!
+		
+		expect(model.email).to be == email
+	end
+	
+	it "should convert whitespace-only strings to nil" do
 		model = model_class.new
 		
 		model.name = "test"
-		model.email = ""
+		model.email = " \n\t"
 		
 		model.save!
 		
